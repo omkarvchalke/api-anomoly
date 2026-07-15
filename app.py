@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from catboost import CatBoostClassifier, Pool
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional
 import shap
 
@@ -79,8 +79,7 @@ class FlowInput(BaseModel):
     ct_dst_src_ltm: float = Field(ge=0)
     hour: int = Field(ge=0, le=23)
 
-    class Config:
-        populate_by_name = True
+    model_config = ConfigDict(populate_by_name=True)
 
 
 def prepare_row(flow: FlowInput) -> pd.DataFrame:
